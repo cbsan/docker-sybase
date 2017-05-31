@@ -6,6 +6,7 @@ LABEL name="Server SQLAnywhere16"
 
 ENV DIR_SQLANY16 /opt/sqlanywhere16
 ENV VERSION_SQLANY sa16
+ENV SQLANY_FILE_DB /opt/sqlanywhere16/demo.db
 
 RUN apt update \
     && apt install -y \
@@ -14,6 +15,7 @@ RUN apt update \
     --no-install-recommends --no-install-suggests \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p $DIR_SQLANY16 \
+    && mkdir -p /db \
     && ls /opt \
     && git clone -b $VERSION_SQLANY https://github.com/cbsan/server-sqlanywhere.git $DIR_SQLANY16 \
     && chmod a+x /opt/sqlanywhere16/bin64/dbsrv16 \
@@ -23,8 +25,5 @@ RUN apt update \
        git ca-certificates
 
 COPY ./docker-entrypoint.sh /usr/local/bin/
-ENV SQLANY_FILE_DB /opt/sqlanywhere16/demo.db
-
-RUN mkdir -p /db
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
