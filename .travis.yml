@@ -1,0 +1,17 @@
+language: ruby
+
+services:
+    - docker
+
+env:
+    - VERSION=master
+
+install:
+    - git clone --depth=50 --branch=${VERSION} https://github.com/cbsan/docker-sybase.git cbsan/docker-sybase
+
+script:
+    - docker build -t cbsan/sybase .
+
+after_success:
+    - docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
+    - docker push cbsan/sybase
