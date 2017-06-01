@@ -4,14 +4,13 @@ services:
     - docker
 
 env:
-    - VERSION=master
-
+    - VERSION=16-server
 install:
     - git clone --depth=50 --branch=${VERSION} https://github.com/cbsan/docker-sybase.git cbsan/docker-sybase
 
 script:
-    - docker build -t cbsan/sybase .
+    - docker build -t cbsan/sybase:${VERSION} .
 
 after_success:
     - docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
-    - docker push cbsan/sybase
+    - docker push cbsan/sybase:${VERSION}

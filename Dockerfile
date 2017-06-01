@@ -18,6 +18,7 @@ RUN apt update \
     && mkdir -p /db \
     && git clone -b $VERSION_SQLANY https://github.com/cbsan/server-sqlanywhere.git $DIR_SQLANY16 \
     && cd $DIR_SQLANY16/lib64 \
+    && ls $DIR_SQLANY16/lib64 \
     && ln -s ./libdbicu16.so.1 libdbicu16.so \
     && ln -s ./libdbicu16_r.so.1 libdbicu16_r.so \
     && ln -s ./libdbicudt16.so.1 libdbicudt16.so \
@@ -28,6 +29,7 @@ RUN apt update \
     && ln -s ./libdbodbc16_n.so.1 libdbodbc16_n.so \
     && ln -s ./libdbodbcansi16_r.so.1 libdbodbcansi16_r.so \
     && ln -s ./libdbodm16.so.1 libdbodm16.so \
+    && ls $DIR_SQLANY16/lib64 \
     && echo "$DIR_SQLANY16/lib64" >> /etc/ld.so.conf.d/sqlanywhere16.conf \
     && ldconfig \
     && chmod a+x /opt/sqlanywhere16/bin64/dbsrv16 \
