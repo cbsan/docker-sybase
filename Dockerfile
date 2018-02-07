@@ -4,9 +4,20 @@ LABEL description="Debian Jessie Slim + SQLAnywhere16"
 LABEL version="1.0"
 LABEL name="Server SQLAnywhere16"
 
-ENV DIR_SQLANY16 /opt/sqlanywhere16
-ENV VERSION_SQLANY sa16
-ENV SQLANY_FILE_DB /opt/sqlanywhere16/demo.db
+ARG SQLANY_PORT=2638
+ENV SQLANY_PORT=$SQLANY_PORT
+
+ARG SQLANY_SERVERNAME=demo
+ENV SQLANY_SERVERNAME=$SQLANY_SERVERNAME
+
+ARG DIR_SQLANY16=/opt/sqlanywhere16
+ENV DIR_SQLANY16=$DIR_SQLANY16
+
+ARG SQLANY_FILE_DB=/opt/sqlanywhere16/demo.db
+ENV SQLANY_FILE_DB=$SQLANY_FILE_DB
+
+ARG VERSION_SQLANY=sa16
+ENV VERSION_SQLANY=$VERSION_SQLANY
 
 RUN apt update \
     && apt install -y \
@@ -35,5 +46,7 @@ RUN apt update \
        git ca-certificates
 
 COPY ./docker-entrypoint.sh /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
